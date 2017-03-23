@@ -1,0 +1,9 @@
+
+ AuthType Basic
+ AuthName "Minu oma, ära näpi"
+ AuthUserFile C:\wamp\www\cp\.htpasswd
+ Require valid-user
+
+<files "*.txt">
+deny from all
+</files>
