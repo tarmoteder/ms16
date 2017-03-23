@@ -6,7 +6,6 @@
 
 // loome ühenduse
 
-
    
 $server = "localhost";
 $user = "root";
