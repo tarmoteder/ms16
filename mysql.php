@@ -32,7 +32,7 @@ $result = $conn->query($sql);
     
 if ($result->num_rows > 0){
     while($row = $result->fetch_assoc()) {
-        echo "ID: ".$row["ID"].
+        echo "<br>ID: ".$row["ID"].
               " Nimi:  ".$row["Nimi"].
               " Perenimi: ".$row["Perenimi"].
               " isikukood: ".$row["Isikukood"].
@@ -43,14 +43,34 @@ if ($result->num_rows > 0){
 
 }
 
+// otsime parameetri järgi
+function search_by($conn){
+    $sql = "SELECT * FROM ms16.inimesed WHERE ID=".$_GET['ID'];
+    $result = $conn->query($sql);
+    
+    if ($result->num_rows > 0){
+    while($row = $result->fetch_assoc()) {
+        echo "<br>ID: ".$row["ID"].
+              " Nimi:  ".$row["Nimi"].
+              " Perenimi: ".$row["Perenimi"].
+              " isikukood: ".$row["Isikukood"].
+              " ja sisestusaeg: ".$row["Aeg"]."<br>";
+    }} else {echo "Sellist kirjet ei ole!";}
+}
+
 function my_insert($conn){
 
-    $sql = "INSERT INTO ms16.inimesed (Nimi, Perenimi, Isikukood) VALUES ('Peeter','Üksjalgvärav','37501014321')";
+    $sql = "INSERT INTO ms16.inimesed (Nimi, Perenimi, Isikukood) VALUES('".
+        $_POST['Nimi']."','".
+        $_POST['Perenimi']."','".
+        $_POST['Isikukood']."')";
+        
+    echo $sql;    
     $result = $conn->query($sql);
 }
 
 function my_delete($conn){
-    $sql = "DELETE FROM ms16.inimesed WHERE Nimi = 'Peeter'";
+    $sql = "DELETE FROM ms16.inimesed WHERE ID=".$_POST['ID'];
     $result = $conn->query($sql);
 }
 
@@ -63,15 +83,26 @@ function show_button($conn){
     echo "<input type='submit' name='show' value='Näita kõiki'>";
     if(isset($_POST['show'])){
         my_query($conn);
-    } else { echo "ei õnnestunud";}
+    }
 }
+    
+// parameetri järgi otsimise nupp
+function search_by_button($conn){
+    echo "<input type='submit' name='search' value='Otsi parameetri järgi'>";
+    if(isset($_GET['search'])){
+        if ($_GET['ID']==null){
+            echo "Lahter ei tohi olla tühi!";
+        } else {search_by($conn);}
+    }
+}
+
 
 // kirje lisamise nupp
 function add_button($conn){
     echo "<input type='submit' name='add' value='Lisa kirje'>";
     if(isset($_POST['add'])){
         my_insert($conn);
-    } else { echo "ei õnnestunud";}
+    }
 }
 
 // kirje kustutamise nupp
@@ -79,7 +110,7 @@ function delete_button($conn){
     echo "<input type='submit' name='delete' value='Kustuta kirje'>";
     if(isset($_POST['delete'])){
         my_delete($conn);
-    } else { echo "ei õnnestunud";}
+    }
 }
 
 // my_query($conn);
@@ -93,16 +124,3 @@ function delete_button($conn){
 
 ?>
 
-<!doctype html>
-<html>
-<body>
-    <form action='' method='post'>
-    <ul>
-        <li><?php show_button($conn); ?></li>
-        <li><?php add_button($conn); ?></li>
-        <li><?php delete_button($conn); ?></li>
-    </ul>
-    </form>
-</body>
-
-</html>
