@@ -21,7 +21,7 @@ echo "<br>";
                 </li>
                 <li>
                 <label for="perenimi">Perenimi</label>
-                <input type="text" name="peranimi">
+                <input type="text" name="perenimi">
                 </li>
                 <li>
                 <input type="submit" name="submit" value="Sisesta">
