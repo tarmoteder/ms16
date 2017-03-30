@@ -45,7 +45,9 @@ if ($result->num_rows > 0){
 
 // otsime parameetri järgi
 function search_by($conn){
-    $sql = "SELECT * FROM ms16.inimesed WHERE ID=".$_GET['ID'];
+    $sql = "SELECT * FROM ms16.inimesed WHERE ".
+        $_GET['PARAM']."='".$_GET['ID']."'";
+     // SELECT * FROM ms16.inimesed WHERE Nimi='Peeter'
     $result = $conn->query($sql);
     
     if ($result->num_rows > 0){
@@ -59,18 +61,26 @@ function search_by($conn){
 }
 
 function my_insert($conn){
-
+    // lahtrite kontroll, mõistlikum oleks teha nupu vajutust jälgides
+    
+    if ($_POST['Nimi']==null OR $_POST['Isikukood']==null ){
+        
+    echo "Nimi ja isikukood on kohustuslikud"; } else {
     $sql = "INSERT INTO ms16.inimesed (Nimi, Perenimi, Isikukood) VALUES('".
         $_POST['Nimi']."','".
         $_POST['Perenimi']."','".
         $_POST['Isikukood']."')";
         
-    echo $sql;    
-    $result = $conn->query($sql);
+        // specialchars EI TÖÖTA KORRALIKULT (uurida)
+        // echo htmlspecialchars($sql);
+        htmlspecialchars($sql);
+        $result = $conn->query($sql);
+     }
 }
 
 function my_delete($conn){
-    $sql = "DELETE FROM ms16.inimesed WHERE ID=".$_POST['ID'];
+    $sql = "DELETE FROM ms16.inimesed WHERE ".
+        $_POST['PARAM']."='".$_POST['ID']."'";
     $result = $conn->query($sql);
 }
 
@@ -87,11 +97,12 @@ function show_button($conn){
 }
     
 // parameetri järgi otsimise nupp
+// sisestuse kontroll on mõtet teha enne funktsiooni poole pöördumist
 function search_by_button($conn){
     echo "<input type='submit' name='search' value='Otsi parameetri järgi'>";
     if(isset($_GET['search'])){
-        if ($_GET['ID']==null){
-            echo "Lahter ei tohi olla tühi!";
+        if ($_GET['ID']==null OR $_GET['PARAM']==null){
+            echo "Lahtrid ei tohi olla tühjad!";
         } else {search_by($conn);}
     }
 }
