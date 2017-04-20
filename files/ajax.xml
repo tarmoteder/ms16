@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<sisu>
+	<pealkiri>AJAX XML</pealkiri>
+		<list>
+			<punkt>0 - uninitialized</punkt>
+			<punkt>1 - loading</punkt>
+			<punkt>2 - loaded</punkt>
+			<punkt>3 - interactive</punkt>
+			<punkt>4 - complete</punkt>
+		</list>
+</sisu>

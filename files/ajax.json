@@ -1,0 +1,11 @@
+{
+	"pealkiri":"JSON XML",
+	"list": {
+		"punkt1":"0 - uninitialized",
+		"punkt2":"1 - loading",
+		"punkt3":"2 - loaded",
+		"punkt4":"3 - interactive",
+		"punkt5":"4 - complete"
+		}
+
+}

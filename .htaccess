@@ -4,6 +4,6 @@
  AuthUserFile C:\wamp\www\cp\.htpasswd
  Require valid-user
 
-<files "*.txt">
-deny from all
-</files>
+# <files "*.txt">
+# deny from all
+# </files>
